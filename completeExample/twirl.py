@@ -28,7 +28,8 @@ def main():
 	#
 	# configure scribblers
 	#
-	# scribblers do calculations. Imagine you want to save the dilepton mass to the output file but do not have a branch
+	# scribblers do calculations using branches in the input root file.
+	# Imagine you want to calculate and save the dilepton mass but do not have a branch
 	# in the input tree which contains the dilepton mass.  However, you do have the 4 momentum vectors for leptons. A scribbler
 	# will take those 4 momentum vectors and calculate the dilepton mass, and save it to an output file.
 	# see www.github.com/TaiSakuma/hcaltrg-scripts for examples of scribblers
@@ -57,6 +58,7 @@ def main():
 
 	tblcfg = [
 			dict(keyAttrNames = ('mht40_pt', ), binnings = (Round(10, 0), ), keyOutColumnNames = ('mht', )),
+			dict(keyAttrNames = ('ht40', ), binnings = (Round(10, 0), ), keyOutColumnNames = ('ht', )),
 			dict(keyAttrNames = ('ht40', 'mht40_pt'), binnings = (htbin, Round(10, 0)), keyOutColumnNames = ('ht', 'mht')),
 			dict(keyAttrNames = ('ht40', 'nJet40', 'mht40_pt'), binnings = (htbin, njetbin, Round(10, 0)), keyOutColumnNames = ('ht', 'njet', 'mht')),
 			dict(keyAttrNames = ('ht40', 'jet_pt'), binnings = (htbin, RoundLog(0.1, 100)), keyIndices = (None, 0), keyOutColumnNames = ('ht', 'jet_pt')),
