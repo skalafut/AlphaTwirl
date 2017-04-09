@@ -55,7 +55,7 @@ class RoundLog(object):
     A functor example of next is::
     
     def test_next(self):
-    	obj = RoundLog()  #the default bin width defined in __init__ is used
+        obj = RoundLog()  #the default bin width defined in __init__ is used
         self.assertAlmostEqual( 2.818382931264, obj.next(2.23872113856834))
         self.assertAlmostEqual( 28.18382931264, obj.next(22.3872113856834))
 
@@ -68,10 +68,10 @@ class RoundLog(object):
                  max = None, overflow_bin = None,
                  valid = returnTrue
     ):
-    	"""valid can be any user defined function which returns True or False.
-    	See Round class for information about other __init__ input parameters.
+        """valid can be any user defined function which returns True or False.
+        See Round class for information about other __init__ input parameters.
 
-    	"""
+        """
         self._round = Round(width = width, aboundary = math.log10(aboundary))
         self.width = width
         self.aboundary = aboundary
@@ -94,15 +94,15 @@ class RoundLog(object):
         )
 
     def __call__(self, val):
-    	"""main function of this class. returns the bin to which val belongs.
-    	
-    	check if the input val is valid (return None if not valid), then
-    	check if the input val is zero, or falls in the underflow or
-    	overflow bin.  If none of these conditions are met, use the
-    	__call__ function defined in the Round class to determine the bin
-    	to which val belongs.
+        """main function of this class. returns the bin to which val belongs.
+        
+        check if the input val is valid (return None if not valid), then
+        check if the input val is zero, or falls in the underflow or
+        overflow bin.  If none of these conditions are met, use the
+        __call__ function defined in the Round class to determine the bin
+        to which val belongs.
 
-    	"""
+        """
 
         if not self.valid(val):
             return None
@@ -130,19 +130,19 @@ class RoundLog(object):
         return 10**val
 
     def next(self, bin):
-    	"""given the input bin, this function returns the next bin.
+        """given the input bin, this function returns the next bin.
 
-    	first check that the bin given in the argument 'bin' exists in the set of bins already
-    	defined.  Return None if bin is not valid.
+        first check that the bin given in the argument 'bin' exists in the set of bins already
+        defined.  Return None if bin is not valid.
 
-    	if bin corresponds to underflow_bin, return the first bin (just above underflow_bin)
-    	
-    	if bin corresponds to overflow_bin, return the overflow_bin
+        if bin corresponds to underflow_bin, return the first bin (just above underflow_bin)
+        
+        if bin corresponds to overflow_bin, return the overflow_bin
 
-    	if bin is not None, and does not match underflow_bin or overflow_bin, then use the
-    	next function defined in the Round class to identify the next bin.
+        if bin is not None, and does not match underflow_bin or overflow_bin, then use the
+        next function defined in the Round class to identify the next bin.
 
-    	"""
+        """
 
         bin = self.__call__(bin)
 

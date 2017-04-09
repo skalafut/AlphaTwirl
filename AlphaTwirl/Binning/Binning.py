@@ -16,19 +16,19 @@ class Binning(object):
     ``boundaries``, which is set equal to a list of the bin boundaries
     that begin at the lowest value, and increase for every bin
     added, like::
-    	
-    	obj = Binning(boundaries = (0, 100, 200, 400, 700, 1100))
+        
+        obj = Binning(boundaries = (0, 100, 200, 400, 700, 1100))
     
     Alternatively, an instance of the Binning class can be instantiated with
     two arguments ``lows`` and ``ups``.  These two arguments are set equal
     to two lists of the same length that specify the lower and upper edge
     of every bin, like::
-    	
-    	obj = Binning(lows = (0, 20, 40, 60), ups = (20, 40, 60, 200))
+        
+        obj = Binning(lows = (0, 20, 40, 60), ups = (20, 40, 60, 200))
 
     after creating obj, it can be called via::
 
-    	obj(25)
+        obj(25)
 
     In this case, obj(25) returns 20.  In general, if the
     input value is valid, then the bin to which the value belongs
@@ -54,27 +54,27 @@ class Binning(object):
     def __init__(self, boundaries = None, lows = None, ups = None,
                  retvalue = 'lowedge', bins = None, underflow_bin = None, overflow_bin = None,
                  valid = returnTrue):
-    	"""__init__ creates an instance of the Binning class.
-    	UPDATE USING GOOGLE PY DOCSTRING FORMAT
+        """__init__ creates an instance of the Binning class.
+        UPDATE USING GOOGLE PY DOCSTRING FORMAT
 
-    	Parameters
-    	---------
-    	boundaries : list
-    	     
+        Parameters
+        ---------
+        boundaries : list
+             
 
-    	By default:
-    		retvalue is set to lowedge.  It can also be set to number.
-    		every value added has the parameter valid equal to True.  Thus, __call__
-    		will never return None.
-    		specific values for underflow_bin and overflow_bin are not set.
+        By default:
+            retvalue is set to lowedge.  It can also be set to number.
+            every value added has the parameter valid equal to True.  Thus, __call__
+            will never return None.
+            specific values for underflow_bin and overflow_bin are not set.
 
-    	For example, underflow_bin could be -999, and overflow_bin could be the
-    	upper edge of the last bin.
+        For example, underflow_bin could be -999, and overflow_bin could be the
+        upper edge of the last bin.
 
-    	valid can be set to any user defined function which returns
-    	True or False.
+        valid can be set to any user defined function which returns
+        True or False.
 
-    	"""
+        """
 
         if boundaries is None:
             if lows is None or ups is None:
@@ -125,48 +125,48 @@ class Binning(object):
         return ret + "\n".join('{:>5} {:>10} {:>10}'.format(b, l, u) for b, l, u in zip(self.bins, self.lows, self.ups))
 
     def __call__(self, val):
-    	"""main function of this class. returns the bin to which val belongs.
+        """main function of this class. returns the bin to which val belongs.
 
-    	SPECIFY INPUT PARAMETER AND RETURN USING GOOGLE PY FORMAT
-    	DONT REPEAT INFORMATION FROM CLASS DESCRIPTION
-    	
-    	if val is not valid, None is returned.  If the default value of valid set in __init__
-    	is not changed from returnTrue, then __call__ will never return None.  If this default
-    	value of valid set in __init__ is changed from returnTrue, then users must check that
-    	the return value of __call__ is not None.
-    	
-    	the upper bin boundary defined with __init__ belongs to the next bin, not the current
-    	bin.  If val passed to __call__ is the upper edge of a bin, then the value belongs
-    	to the next bin.
+        SPECIFY INPUT PARAMETER AND RETURN USING GOOGLE PY FORMAT
+        DONT REPEAT INFORMATION FROM CLASS DESCRIPTION
+        
+        if val is not valid, None is returned.  If the default value of valid set in __init__
+        is not changed from returnTrue, then __call__ will never return None.  If this default
+        value of valid set in __init__ is changed from returnTrue, then users must check that
+        the return value of __call__ is not None.
+        
+        the upper bin boundary defined with __init__ belongs to the next bin, not the current
+        bin.  If val passed to __call__ is the upper edge of a bin, then the value belongs
+        to the next bin.
 
-    	if val is equal to the lower edge of bin J, then val belongs to bin J.
-    	
-    	"""
+        if val is equal to the lower edge of bin J, then val belongs to bin J.
+        
+        """
         if not self._valid(val): return None
         if val < self.lows[0]: return self.underflow_bin
         if self.ups[-1] <= val: return self.overflow_bin
         return [b for b, l, u in zip(self.bins, self.lows, self.ups) if l <= val < u][0]
 
     def next(self, bin):
-    	"""given one bin, this method returns the next bin.
-    	
-    	SPECIFY INPUT PARAMETER AND RETURN USING GOOGLE PY FORMAT
-    	DONT REPEAT INFORMATION FROM CLASS DESCRIPTION
-    	
+        """given one bin, this method returns the next bin.
+        
+        SPECIFY INPUT PARAMETER AND RETURN USING GOOGLE PY FORMAT
+        DONT REPEAT INFORMATION FROM CLASS DESCRIPTION
+        
 
-    	__call__ is called first to determine the correct current bin (this is tricky
-    	for bins whose edges are floating point values)
-    	
-    	if bin corresponds to underflow bin, then this function returns the lowest
-    	bin (just above underflow bin)
+        __call__ is called first to determine the correct current bin (this is tricky
+        for bins whose edges are floating point values)
+        
+        if bin corresponds to underflow bin, then this function returns the lowest
+        bin (just above underflow bin)
 
-    	if bin corresponds to overflow bin, then this function returns the overflow
-    	bin
+        if bin corresponds to overflow bin, then this function returns the overflow
+        bin
 
-    	if bin corresponds to the last bin, then this function returns the overflow
-    	bin
+        if bin corresponds to the last bin, then this function returns the overflow
+        bin
 
-    	"""
+        """
         if self.lowedge:
             # call self._call__() to ensure that the 'bin' is indeed one of the
             # bins.
